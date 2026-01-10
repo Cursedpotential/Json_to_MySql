@@ -20,11 +20,10 @@ const dbConfig = {
   database: process.env.DB_NAME || 'test_json'
 };
 
-console.log('🔧 DB Config:', {
+console.log('DB Config:', {
   host: dbConfig.host,
   port: dbConfig.port,
   user: dbConfig.user,
-  password: dbConfig.password ? '***' + dbConfig.password.slice(-4) : '(empty)',
   database: dbConfig.database
 });
 
