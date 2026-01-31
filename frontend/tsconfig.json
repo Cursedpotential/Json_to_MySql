@@ -13,8 +13,7 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["jest", "@testing-library/jest-dom", "node"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "tests", "**/*.test.ts", "**/*.test.tsx"]

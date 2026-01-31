@@ -7,6 +7,7 @@ import { RelationshipEditor } from './components/mapping/RelationshipEditor';
 import { SqlGenerator } from './components/mapping/SqlGenerator';
 import { SaveLoadConfig } from './components/mapping/SaveLoadConfig';
 import { StagingWorkflow } from './components/staging/StagingWorkflow';
+import { FileImporter } from './components/import/FileImporter';
 import { SchemaAnalysis, TableDefinition, FieldMapping, TableRelationship } from './types';
 
 type Step = 'analyze' | 'select-tables' | 'map-fields' | 'define-relationships' | 'generate-sql';
@@ -20,6 +21,7 @@ export const App: React.FC = () => {
   const [relationships, setRelationships] = useState<TableRelationship[]>([]);
   const [executionCompleted, setExecutionCompleted] = useState(false);
   const [showStaging, setShowStaging] = useState(false);
+  const [showImporter, setShowImporter] = useState(false);
 
   const handleAnalysisComplete = (analysisResult: SchemaAnalysis, meta: any) => {
     setAnalysis(analysisResult);
@@ -123,6 +125,20 @@ export const App: React.FC = () => {
 
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <button
+            onClick={() => setShowImporter(true)}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#17a2b8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+            }}
+          >
+            Import File
+          </button>
+          <button
             onClick={handleOpenStaging}
             style={{
               padding: '10px 20px',
@@ -134,7 +150,7 @@ export const App: React.FC = () => {
               fontWeight: 'bold',
             }}
           >
-            📦 Stage Data
+            Stage Data
           </button>
 
           {(['map-fields', 'define-relationships', 'generate-sql'].includes(currentStep)) && mappings.length > 0 && (
@@ -391,6 +407,16 @@ export const App: React.FC = () => {
         <StagingWorkflow
           sourceTables={selectedTables}
           onClose={handleCloseStaging}
+        />
+      )}
+
+      {/* File Import Modal */}
+      {showImporter && (
+        <FileImporter
+          onClose={() => setShowImporter(false)}
+          onImportComplete={(result) => {
+            console.log('Import complete:', result);
+          }}
         />
       )}
     </div>

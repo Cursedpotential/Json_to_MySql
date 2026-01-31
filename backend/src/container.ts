@@ -7,6 +7,7 @@ import { ExecutionService } from './services/executionService.js';
 import { FilterPresetService } from './services/filterPresetService.js';
 import { MappingConfigService } from './services/mappingConfigService.js';
 import { TableService } from './services/tableService.js';
+import { FileImportService } from './services/fileImportService.js';
 
 // Load environment variables first
 dotenv.config();
@@ -37,5 +38,6 @@ container.registerSingleton(ExecutionService, ExecutionService);
 container.registerSingleton(FilterPresetService, FilterPresetService);
 container.registerSingleton(MappingConfigService, MappingConfigService);
 container.registerSingleton(TableService, TableService);
+container.registerSingleton(FileImportService, FileImportService);
 
 export { container };
