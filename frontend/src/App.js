@@ -8,6 +8,7 @@ import { RelationshipEditor } from './components/mapping/RelationshipEditor';
 import { SqlGenerator } from './components/mapping/SqlGenerator';
 import { SaveLoadConfig } from './components/mapping/SaveLoadConfig';
 import { StagingWorkflow } from './components/staging/StagingWorkflow';
+import { FileImporter } from './components/import/FileImporter';
 export const App = () => {
     const [currentStep, setCurrentStep] = useState('analyze');
     const [analysis, setAnalysis] = useState(null);
@@ -17,6 +18,7 @@ export const App = () => {
     const [relationships, setRelationships] = useState([]);
     const [executionCompleted, setExecutionCompleted] = useState(false);
     const [showStaging, setShowStaging] = useState(false);
+    const [showImporter, setShowImporter] = useState(false);
     const handleAnalysisComplete = (analysisResult, meta) => {
         setAnalysis(analysisResult);
         setMetadata(meta);
@@ -95,7 +97,15 @@ export const App = () => {
                             borderBottom: '2px solid #007bff',
                             paddingBottom: '10px',
                             margin: 0,
-                        }, children: "JSON to SQL Flattener" }), _jsxs("div", { style: { display: 'flex', gap: '10px', alignItems: 'center' }, children: [_jsx("button", { onClick: handleOpenStaging, style: {
+                        }, children: "JSON to SQL Flattener" }), _jsxs("div", { style: { display: 'flex', gap: '10px', alignItems: 'center' }, children: [_jsx("button", { onClick: () => setShowImporter(true), style: {
+                                    padding: '10px 20px',
+                                    backgroundColor: '#17a2b8',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontWeight: 'bold',
+                                }, children: "Import File" }), _jsx("button", { onClick: handleOpenStaging, style: {
                                     padding: '10px 20px',
                                     backgroundColor: '#28a745',
                                     color: 'white',
@@ -103,7 +113,7 @@ export const App = () => {
                                     borderRadius: '4px',
                                     cursor: 'pointer',
                                     fontWeight: 'bold',
-                                }, children: "\uD83D\uDCE6 Stage Data" }), (['map-fields', 'define-relationships', 'generate-sql'].includes(currentStep)) && mappings.length > 0 && (_jsx(SaveLoadConfig, { currentConfig: getCurrentConfig(), onLoad: handleLoadConfig }))] })] }), _jsxs("div", { style: { marginBottom: '30px', display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }, children: [_jsx("div", { style: {
+                                }, children: "Stage Data" }), (['map-fields', 'define-relationships', 'generate-sql'].includes(currentStep)) && mappings.length > 0 && (_jsx(SaveLoadConfig, { currentConfig: getCurrentConfig(), onLoad: handleLoadConfig }))] })] }), _jsxs("div", { style: { marginBottom: '30px', display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }, children: [_jsx("div", { style: {
                             padding: '8px 16px',
                             backgroundColor: currentStep === 'analyze' ? '#007bff' : '#28a745',
                             color: 'white',
@@ -195,5 +205,7 @@ export const App = () => {
                                     borderRadius: '4px',
                                     cursor: 'pointer',
                                     fontWeight: 'bold',
-                                }, children: "\uD83D\uDD04 Start New Analysis" })] })] })), showStaging && (_jsx(StagingWorkflow, { sourceTables: selectedTables, onClose: handleCloseStaging }))] }));
+                                }, children: "\uD83D\uDD04 Start New Analysis" })] })] })), showStaging && (_jsx(StagingWorkflow, { sourceTables: selectedTables, onClose: handleCloseStaging })), showImporter && (_jsx(FileImporter, { onClose: () => setShowImporter(false), onImportComplete: (result) => {
+                    console.log('Import complete:', result);
+                } }))] }));
 };
